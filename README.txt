@@ -1,1 +1,0 @@
-This project for Tubsakae solar power
