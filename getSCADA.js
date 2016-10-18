@@ -5,10 +5,18 @@ var dateFormat = require('dateformat');
 //var app = express();
 var oid = require('./config/oidtag');
 var db = mongojs.connect;
+/*
 var connection = mysql.createConnection({
   host     : '10.20.18.132',
   user     : 'tub',
   password : 'gearman1',
+  database : 'pcs9700'
+});
+*/
+var connection = mysql.createConnection({
+  host     : '127.0.0.1',
+  user     : 'root',
+  password : '',
   database : 'pcs9700'
 });
 
