@@ -3,7 +3,8 @@ var mongojs = require('./db');
 var dateFormat = require('dateformat');
 var express = require('express');
 var app = express();
-var port = process.env.PORT || 2016
+var port = 80
+var port = process.env.PORT || port
 //var oid = require('./config/oidtag');
 var db = mongojs.connect;
 

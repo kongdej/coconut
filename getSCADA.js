@@ -1,18 +1,8 @@
 var mongojs = require('./db');
 var mysql = require('mysql');
 var dateFormat = require('dateformat');
-//var express = require('express');
-//var app = express();
 var oid = require('./config/oidtag');
 var db = mongojs.connect;
-/*
-var connection = mysql.createConnection({
-  host     : '10.20.18.132',
-  user     : 'tub',
-  password : 'gearman1',
-  database : 'pcs9700'
-});
-*/
 var connection = mysql.createConnection({
   host     : '127.0.0.1',
   user     : 'root',
@@ -27,10 +17,10 @@ var request_time = 15000; // 15 seconds
 
 var sql  = 'SELECT attr_oid,fValue,from_unixtime(attr_time) modified FROM ';
 
-//select table
-//var now = new Date();
-//sql += 'analogueother'+dateFormat(now,"yyyymm");
-sql += 'analogueother201608';
+//select table yyyymm
+var now = new Date();
+sql += 'analogueother'+dateFormat(now,"yyyymm");
+//sql += 'analogueother201608';
 
 sql += ' WHERE attr_oid in ';
 var idlist=[];
@@ -54,12 +44,9 @@ function dataDetailobj(oid,name,value,unit) {
 	this.unit=unit;
 }
 
-
-
 console.log(sql);
 
 var interval = setInterval(function() {
-
 	connection.query(sql, function(err, rows, fields) {
 	  if (err) {
 	  	console.log('err:' + sql);
