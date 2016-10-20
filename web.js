@@ -16,7 +16,7 @@ app.get('/sp',function (req,res){
    	var db = mongojs.connect;
 	db.solarplant.findOne({plant:"Solar Plant"},function(err,doc){
 		res.json(doc);
-		console.log("/GET/sp");
+		console.log(doc.lastmodified);
 	});
 });
 

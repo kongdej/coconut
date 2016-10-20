@@ -12,15 +12,15 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-var port = process.env.PORT || 2016
-var request_time = 15000; // 15 seconds
+//var port = process.env.PORT || 2016
+var request_time = 30000; // 30 seconds
 
 var sql  = 'SELECT attr_oid,fValue,from_unixtime(attr_time) modified FROM ';
 
 //select table yyyymm
-var now = new Date();
-sql += 'analogueother'+dateFormat(now,"yyyymm");
-//sql += 'analogueother201608';
+//var now = new Date();
+//sql += 'analogueother'+dateFormat(now,"yyyymm");
+sql += 'analogueother201608';
 
 sql += ' WHERE attr_oid in ';
 var idlist=[];
@@ -61,7 +61,7 @@ var interval = setInterval(function() {
 	  for (var i=0; i < rows.length; i++) { 
 	  	datalist[i] = new dataDetailobj(rows[i].attr_oid,oid.name[rows[i].attr_oid],rows[i].fValue,oid.unit[rows[i].attr_oid]);
 	  };
-	  
+	  //console.log(rows[0].modified);
 	  var result = new dataobj("Solar Plant",rows[0].modified,datalist);
 
  	  db.solarplant.remove({});
