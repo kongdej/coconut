@@ -56,8 +56,8 @@
                 </div>
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Solar Plant</a></li>
-                        <li><a href="solarroof.html">Solar Roof</a></li>
+                        <li><a href="index.html">Solar Plant</a></li>
+                        <li class="active"><a href="#">Solar Roof</a></li>
                         <li>Napae Plant</li>
                         <li>Wind Plant</li>
                     </ul>
@@ -77,41 +77,7 @@
                     <div class="skill">
                         <h2><i class="fa fa-clock-o"></i> <span id="updated"></span></h2>
 
-                        <div class="progress-wrap">
-                            <h2>Zone A</h2>
-                                <div class="progress">
-                                  <div id="zoneAbar" class="progress-bar  color1" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                    <span id="zoneAvalue" class="bar-width"></span>
-                                  </div>
-                            </div>
-                        </div>
-
-                        <div class="progress-wrap">
-                            <h2>Zone B</h2>
-                            <div class="progress">
-                              <div id="zoneBbar" class="progress-bar color2" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                               <span id="zoneBvalue" class="bar-width"></span>
-                              </div>
-                            </div>
-                        </div>
-
-                        <div class="progress-wrap">
-                            <h2>Zone C</h2>
-                            <div class="progress">
-                              <div id="zoneCbar" class="progress-bar color3" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                <span id="zoneCvalue" class="bar-width"></span>
-                              </div>
-                            </div>
-                        </div>
-
-                        <div class="progress-wrap">
-                            <h2>Zone D&E</h2>
-                            <div class="progress">
-                              <div id="zoneDbar" class="progress-bar color4" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                <span id="zoneDvalue" class="bar-width"></span>
-                              </div>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div>Average Temperature : <span id="temperatrue"></span> DegC</div>
                     <div>Average Irradiance  : <span id="irradiance"></span> W/m2</div>
@@ -126,7 +92,7 @@
                             <div class="panel-heading active">
                               <h3 class="panel-title">
                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1">
-                                  Photovoltaic Power Plant
+                                  Solar Roof Generating Power
                                   <i class="fa fa-angle-right pull-right"></i>
                                 </a>
                               </h3>
@@ -223,7 +189,7 @@
         label:"hKW"
       });
 
-    url = "http://localhost:2016/sp";
+    url = "http://localhost:2016/sr";
     setInterval(function () {
         $.getJSON( url, function( data ) {
             console.log(data);
@@ -236,10 +202,10 @@
             for(var i=0; i < data.data.length; i++) {
 //                console.log(data.data[0].oid.toString());
       
-                if (data.data[i].oid.toString() == "4222124661211148") {
+                if (data.data[i].oid.toString() == '1') {
                     $("#totalgen").html(data.data[i].value);
                 }
-                if (data.data[i].oid == '4222124661080076') {
+                if (data.data[i].oid == '2') {
                     g1.refresh(data.data[i].value);
                 }
                 if (data.data[i].oid == '4222124661145612') {
