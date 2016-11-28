@@ -5,37 +5,36 @@ var dateFormat = require('dateformat');
 var oid = require('./config/oidtag');
 
 var db = mongojs.connect;
+
+/** configuration ********************************************************/
+
 var connection = mysql.createConnection({
-/*
   host     : '127.0.0.1',
   user     : 'root',
   password : '',
   database : 'pcs9700'
- */
+ /*
   host     : '10.20.18.132',
   user     : 'tub',
   password : 'gearman1',
   database : 'pcs9700'
+  */
 });
 
-connection.connect();
-
-//var port = process.env.PORT || 2016
-var request_time = 2000; // 30 seconds
-
-var sql  = "SELECT attr_oid,fValue,from_unixtime(attr_time,'%Y-%m-%d %H:%i') modified FROM ";
-
-/********************************************************************/
 var now = new Date();
-//sql += 'analogueother'+dateFormat(now,"yyyymm");
-sql += 'analogueother201610';
+var table;
+// table= 'analogueother'+dateFormat(now,"yyyymm");
+table = 'analogueother201608';
 
-//var fileName = "./roof/20161118.csv";
+//var fileName = "./roof/20160922.csv";
 var fileName = "P:/solarRoof/20160922.csv";
-//var fileName = './roof/' + dateFormat(now,"yyyymmdd")+'.csv';
+//var fileName = 'z:/roof/' + dateFormat(now,"yyyymmdd")+'.csv';
 
+var request_time = 2000; // 30 seconds
 /********************************************************************/
-sql += ' WHERE attr_oid in ';
+
+/* build sql command */
+var sql  = "SELECT attr_oid,fValue,from_unixtime(attr_time,'%Y-%m-%d %H:%i') modified FROM " + table + ' WHERE attr_oid in ';
 var idlist=[];
 for (var k in oid.name) {
 	idlist.push(k);
@@ -43,6 +42,8 @@ for (var k in oid.name) {
 
 sql +='('+idlist.join(',')+')';
 sql +=	' ORDER BY attr_time DESC LIMIT 0,'+idlist.length;
+console.log(sql);
+/**/
 
 function dataobj(plant,lastmodified,datalist) {
 	this.plant = plant;
@@ -57,7 +58,8 @@ function dataDetailobj(oid,name,value,unit) {
 	this.unit=unit;
 }
 
-console.log(sql);
+
+connection.connect();
 
 var interval = setInterval(function() {
 	connection.query(sql, function(err, rows, fields) {
@@ -66,9 +68,6 @@ var interval = setInterval(function() {
 		connection.end()
 	  	return;
 	  }
-
-	  //var date = new Date();
-      //console.log(rows);
 
       /* get solar plant data */
 	  var datalist=[];
@@ -107,7 +106,10 @@ var interval = setInterval(function() {
    	  		db.solarroof.insert(result);
 	    	console.log('GET Solar Roof @'+fields[0]);
 		});
-
-
  	});
 }, request_time);
+
+process.on('uncaughtException', function (err) {
+  console.error(err);
+  console.log("Node NOT Exiting...");
+});

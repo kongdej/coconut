@@ -22,14 +22,14 @@ app.get('/sp',function (req,res){
 		doc['data'].forEach(function (item) {
 			if (item.oid == '4222124661211148')	{
 				cov = item.value*kco;
-				console.log(cov);
+//				console.log(cov);
 
-				co2 = {'oid':'1', name:'CO2', value: cov, unit: 'Ton'}
+				co2 = {'oid':'1', name:'CO2', value: Math.round(cov), unit: 'Ton'}
 			}		
 		});
 		ptv = cov*200/kpt;
 
-		pt = {'oid':'2', name:'Plant', value: ptv, unit: 'EA'}
+		pt = {'oid':'2', name:'Plant', value: Math.round(ptv), unit: 'tree'}
 		
 		doc['data'][20]=co2;
 		doc['data'][21]=pt;
@@ -43,8 +43,13 @@ app.get('/sr',function (req,res){
 
    	var db = mongojs.connect;
 	db.solarroof.findOne({plant:"Solar Roof"},function(err,doc){
-		res.json(doc);
-		console.log(doc.lastmodified + ': Solar Roof is requested.');
+		if (doc != null){
+			res.json(doc);
+			console.log(doc.lastmodified + ': Solar Roof is requested.');
+		}
+		else {
+			console.log('data is null.');
+		}
 	});
 });
 

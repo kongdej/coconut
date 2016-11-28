@@ -157,26 +157,25 @@
     var g1 = new JustGage({
         id: "gauge1",
         value: 0,
-        value:0,
         min: 0,
-        max: 4000,
+        max: 50000,
         relativeGaugeSize: true,
         counter: true,
-        formatNumber:true,
+//       formatNumber:true,
 //        humanFriendly: true,
 //        pointer: true,
 //        symbol: '%',
         gaugeWidthScale: .8,
 //        textRenderer: customValue,
         title: "Current Active Power",
-        label:"KW"
+        label:"W"
       });
 
     var g2 = new JustGage({
         id: "gauge2",
         value: 0,
         min: 0,
-        max: 10000,
+        max: 500,
         counter: true,
         relativeGaugeSize: true,
         comas:true,
@@ -192,56 +191,33 @@
     url = "http://localhost:2016/sr";
     setInterval(function () {
         $.getJSON( url, function( data ) {
-            console.log(data);
+//            console.log(data);
             var w=wd=we=0;
 
-            var date = data.lastmodified.split(' ');
-            var time = date[1].split('.');
-            var date = date[0].replace(/-/g, '/');
-            $("#updated").html(date + ' - ' + time[0]);
+//            var date = data.lastmodified.split(' ');
+//            var time = date[1].split('.');
+ //           var date = date[0].replace(/-/g, '/');
+//            console.log(data.lastmodified);
+            $("#updated").html(data.lastmodified);
             for(var i=0; i < data.data.length; i++) {
 //                console.log(data.data[0].oid.toString());
       
                 if (data.data[i].oid.toString() == '1') {
                     $("#totalgen").html(data.data[i].value);
                 }
-                if (data.data[i].oid == '2') {
+                if (data.data[i].oid.toString() == '2') {
+//                    console.log(data.data[i].value);
                     g1.refresh(data.data[i].value);
                 }
-                if (data.data[i].oid == '4222124661145612') {
+                if (data.data[i].oid == '3') {
                     g2.refresh(data.data[i].value);
                 }
-                if (data.data[i].oid == '4222125049970691') {
-                    $("#temperatrue").html(data.data[i].value);
-                }
-                if (data.data[i].oid == '4222125050036227') {
+                if (data.data[i].oid == '4') {
                     $("#irradiance").html(data.data[i].value);
                 }
-                if (data.data[i].oid == '4222125050167299') {
-                 //   console.log(data.data[i].value);
-                    w=data.data[i].value/10;
-                    document.getElementById("zoneAbar").style.width=w.toString()+'%';
-                    $("#zoneAvalue").html(data.data[i].value.toString()+' KW');
+                if (data.data[i].oid == '5') {
+                    $("#temperatrue").html(data.data[i].value);
                 }
-                if (data.data[i].oid == '4222125050429443') {
-                //    console.log(data.data[i].value);
-                    w=data.data[i].value/10;
-                    document.getElementById("zoneBbar").style.width=w.toString()+'%';
-                    $("#zoneBvalue").html(data.data[i].value.toString()+' KW');
-                }
-                if (data.data[i].oid == '4222125050691587') {
-                //  console.log(data.data[i].value);
-                    w=data.data[i].value/10;
-                    document.getElementById("zoneCbar").style.width=w.toString()+'%';
-                    $("#zoneCvalue").html(data.data[i].value.toString()+' KW');
-                }
-                if (data.data[i].oid == '4222125050953731') {
-                    wd=data.data[i].value;
-                    w=(wd+we)/10;
-                    document.getElementById("zoneDbar").style.width=w.toString()+'%';
-                    $("#zoneDvalue").html((we+wd).toString()+' KW');
-                }
-
             }
         });
 

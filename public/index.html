@@ -116,6 +116,8 @@
                     <div>Average Temperature : <span id="temperatrue"></span> DegC</div>
                     <div>Average Irradiance  : <span id="irradiance"></span> W/m2</div>
                     <div>Total Generating Capacity  : <span id="totalgen"></span> MWh</div>
+                    <div>CO2  : <span id="co2"></span> Ton</div>
+                    <div>Plant  : <span id="plant"></span> tree</div>
                     <p></p>
                 </div><!--/.col-sm-6-->
 
@@ -238,6 +240,12 @@
       
                 if (data.data[i].oid.toString() == "4222124661211148") {
                     $("#totalgen").html(data.data[i].value);
+                }
+                if (data.data[i].oid.toString() == "1") {
+                    $("#co2").html(data.data[i].value);
+                }
+                if (data.data[i].oid.toString() == "2") {
+                    $("#plant").html(data.data[i].value);
                 }
                 if (data.data[i].oid == '4222124661080076') {
                     g1.refresh(data.data[i].value);
