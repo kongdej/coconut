@@ -15,6 +15,11 @@
     "dateformat": "^1.0.12",
     "express": "^4.14.0",
     "mongojs": "^2.4.0",
-    "mysql": "^2.11.1"
+    "mysql": "^2.11.1",
+    "https-proxy-agent": "~1.0.0",
+    "http-proxy": "~1.15.2",
+    "http-proxy-agent": "~1.0.0",
+    "node-ifttt-maker": "~0.1.2",
+    "request": "~2.79.0"
   }
 }
